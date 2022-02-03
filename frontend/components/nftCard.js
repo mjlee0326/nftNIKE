@@ -17,22 +17,22 @@ const CImage = styled(Image)`
   border-top-right-radius: 10px;
 `;
 
-const NFTCard = ({ collectionSymbol, nft, idx }) => {
+const NFTCard = ({ brand, nft, idx }) => {
   const router = useRouter();
   return (
     <Grid.Col
       span={12}
       md={6}
       lg={4}
-      onClick={() => {
-        if (nft.token_ids) {
-          router.push(`/assets/${collectionSymbol}/${nft.token_ids}`);
-        } else {
-          alert(
-            "데몬이 아직 업데이트 하지 않은 NFT를 선택하셨습니다. 데몬이 tokenId 정보를 DB에 가져올 때까지 잠시만 기다려주세요.",
-          );
-        }
-      }}
+    // onClick={() => {
+    //   if (nft.token_ids) {
+    //     router.push(`/assets/${collectionSymbol}/${nft.token_ids}`);
+    //   } else {
+    //     alert(
+    //       "데몬이 아직 업데이트 하지 않은 NFT를 선택하셨습니다. 데몬이 tokenId 정보를 DB에 가져올 때까지 잠시만 기다려주세요.",
+    //     );
+    //   }
+    // }}
     >
       <NftWrapper
         style={{

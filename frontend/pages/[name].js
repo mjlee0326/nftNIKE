@@ -46,24 +46,30 @@ const NameBox = styled.div`
 
 const NFTS = () => {
   const router = useRouter();
-  const { symbol } = router.query;
-  const [collection, setCollection] = useState(nike);
+  const [info, setInfo] = useState();
+  const [brand, setBrand] = useState();
   // const account = useStore((state) => state.account);
   const [account, setAccount] = useState('');
 
-  // const getCollection = async () => {
-  //   if (symbol) {
-  //     const {
-  //       data: { data: collection },
-  //     } = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/collections/${symbol}`);
-  //     // console.log(collection);
-  //     // console.log(collection);
-  //     setCollection(collection);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getCollection();
-  // }, [symbol]);
+  const getBrand = async () => {
+    setBrand(router?.query.name);
+    console.log(brand);
+
+    if (brand) {
+      console.log(brand)
+      const {
+        data: { data: info },
+      } = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URI}/brands/${brand}`);
+      // console.log(info);
+      // console.log(info);
+      setInfo(info);
+
+      console.log(info)
+    }
+  };
+  useEffect(() => {
+    getBrand();
+  }, [brand]);
 
   return (
     <div>
@@ -71,7 +77,7 @@ const NFTS = () => {
         style={{
           width: "100%",
           height: "500px",
-          backgroundImage: `url(${collection?.banner_image_url})`,
+          backgroundImage: `url(${info?.title?.imageURI})`,
         }}
       ></div>
       <div
@@ -91,12 +97,12 @@ const NFTS = () => {
       <Description>
         <NameBox>
           <Text style={{ fontSize: "38px", fontWeight: "bold", marginRight: "10px" }} align="center">
-            {collection.name}
+            {info?.title?.name}
           </Text>
         </NameBox>
 
         {/* <div style={{ position: "absolute", right: "30px", top: "330px" }}>
-          <Link href={`/assets/${collection?.symbol}/create`} passHref>
+          <Link href={`/assets/${info?.symbol}/create`} passHref>
             <Button size="lg">Add Item</Button>
           </Link>
         </div> */}
@@ -104,11 +110,11 @@ const NFTS = () => {
         {/* <div>
           <div style={{ display: "flex", margin: "15px auto", width: "580px", height: "90px" }}>
             <StatBox style={{ borderTopLeftRadius: "8px", borderBottomLeftRadius: "8px", borderRightWidth: "0px" }}>
-              <StatCount>{collection?.number_of_assets}</StatCount>
+              <StatCount>{info?.number_of_assets}</StatCount>
               <StatTitle>items</StatTitle>
             </StatBox>
             <StatBox style={{ borderRightWidth: "0px" }}>
-              <StatCount>{collection?.number_of_owners}</StatCount>
+              <StatCount>{info?.number_of_owners}</StatCount>
               <StatTitle>owners</StatTitle>
             </StatBox>
             <StatBox style={{ borderRightWidth: "0px" }}>
@@ -128,7 +134,7 @@ const NFTS = () => {
           </div>
         </div> */}
 
-        <div style={{ textAlign: "center", margin: "20px 0" }}>{collection?.description}</div>
+        <div style={{ textAlign: "center", margin: "20px 0" }}>{info?.title?.description}</div>
       </Description>
 
       <Divider style={{ margin: "60px 0 40px 0" }} />
@@ -142,16 +148,17 @@ const NFTS = () => {
           { maxWidth: 840, cols: 1, spacing: "sm" },
         ]}
       >
-        {/* {collection?.assets.map((nft, i) => {
+        {info?.products?.map((nft, i) => {
           console.log(nft);
           return nft.imageURI === null ? null : (
-            <NFTCard key={i} collectionSymbol={collection?.symbol} nft={nft} idx={i} />
+            <NFTCard key={i} brand={info?.title.name} nft={nft} idx={i} />
           );
-        })} */}
+        })}
       </SimpleGrid>
-      <Text style={{ fontSize: "24px", color: "rgb(112, 122, 131)" }} align="center">
-        Empty
-      </Text>
+      {info?.products.length === 0 ?
+        <Text style={{ fontSize: "24px", color: "rgb(112, 122, 131)" }} align="center">
+          Empty
+        </Text> : null}
     </div>
   );
 };

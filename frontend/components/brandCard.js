@@ -31,7 +31,7 @@ const BrandCard = ({ brand }) => {
       md={6}
       lg={4}
       onClick={() => {
-        router.push(`${brand.name}`);
+        router.push(`/${brand.name}`);
         // router.push({
         //   pathname: `[name]`,
         //   query: { name: brand.name }
