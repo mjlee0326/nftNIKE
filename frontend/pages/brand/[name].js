@@ -3,11 +3,11 @@ import { Button, Divider, SimpleGrid, Text } from "@mantine/core";
 import styled from "styled-components";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import NFTCard from "../components/nftCard";
+import NFTCard from "../../components/nftCard";
 // import { useStore } from "../../utils/store";
 import Link from "next/link";
 import axios from "axios";
-import { nike } from '../public/brands/nike';
+import { nike } from '../../public/brands/nike';
 
 const StatBox = styled.div`
   flex: 1;
@@ -47,16 +47,14 @@ const NameBox = styled.div`
 const NFTS = () => {
   const router = useRouter();
   const [info, setInfo] = useState();
-  const [brand, setBrand] = useState();
+  const { name } = router.query
   // const account = useStore((state) => state.account);
   const [account, setAccount] = useState('');
+  const brand = name;
 
   const getBrand = async () => {
-    setBrand(router?.query.name);
-    console.log(brand);
 
     if (brand) {
-      console.log(brand)
       const {
         data: { data: info },
       } = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URI}/brands/${brand}`);

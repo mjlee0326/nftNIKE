@@ -36,15 +36,6 @@ const Brands = () => {
         {brands && brands.map((brand, index) => {
           return <BrandCard brand={brand} key={index} />
         })}
-        {/* <BrandCard brand={aether} /> */}
-        {/* <BrandCard brand={nike} />
-        <BrandCard brand={adidas} />
-        <BrandCard brand={converse} />
-        <BrandCard brand={jordan} />
-        <BrandCard brand={nike} />
-        <BrandCard brand={nike} />
-        <BrandCard brand={nike} />
-        <BrandCard brand={nike} /> */}
       </Grid>
     </div>
   );
